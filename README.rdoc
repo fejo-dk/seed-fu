@@ -1,3 +1,4 @@
+
 = Seed Fu
 
 Seed Fu is an attempt to once and for all solve the problem of inserting and maintaining seed data in a database. It uses a variety of techniques gathered from various places around the web and combines them to create what is hopefully the most robust seed data system around.
@@ -5,7 +6,9 @@ Seed Fu is an attempt to once and for all solve the problem of inserting and mai
 
 == Simple Usage
 
-Seed data is taken from the <tt>db/fixtures</tt> directory. Simply make descriptive .rb files in that directory (they can be named anything, but users.rb for the User model seed data makes sense, etc.). These scripts will be run whenever the <tt>db:seed</tt> (<tt>db:seed_fu</tt> for Rails 2.3.5 and greater) rake task is called, and in order (you can use <tt>00_first.rb</tt>, <tt>00_second.rb</tt>, etc). You can put arbitrary Ruby code in these files, but remember that it will be executed every time the rake task is called, so it needs to be runnable multiple times on the same database.
+Seed data is taken from the <tt>db/fixtures</tt> directory. Simply make descriptive .rb files in that directory (they can be named anything, but users.rb for the User model seed data makes sense, etc.). These scripts will be run whenever the <tt>db:seed</tt> (<tt>db:seed_fu</tt> for Rails 2.3.4 and greater) rake task is called, and in order (you can use <tt>00_first.rb</tt>, <tt>00_second.rb</tt>, etc). You can put arbitrary Ruby code in these files, but remember that it will be executed every time the rake task is called, so it needs to be runnable multiple times on the same database.
+
+<strong>Note:</strong> In order to make the <tt>db:seed_fu</tt> task available in Rails when using the Gem version of this library you have to <tt>require 'seed-fu/tasks'</tt> in the Rails Rakefile.
 
 You can also have environment-specific seed data placed in  <tt>db/fixtures/ENVIRONMENT</tt> that will only be loaded if that is the current environment.
 

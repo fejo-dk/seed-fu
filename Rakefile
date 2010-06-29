@@ -12,7 +12,7 @@ begin
     gemspec.description = "Seed Fu is an attempt to once and for all solve the problem of inserting and maintaining seed data in a database. It uses a variety of techniques gathered from various places around the web and combines them to create what is hopefully the most robust seed data system around."
     gemspec.authors = ["Michael Bleigh"]
     gemspec.add_dependency 'rails', '>= 2.1'
-    gemspec.files = FileList["[A-Z]*", "{lib,spec,rails}/**/*"] - FileList["**/*.log"]
+    gemspec.files = FileList["[A-Z]*", "{lib,spec,rails,tasks}/**/*"] - FileList["**/*.log"]
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
