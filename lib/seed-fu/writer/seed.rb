@@ -10,7 +10,7 @@ module SeedFu
         seed_by ||= config[:seed_by]
         seed_handle.syswrite( <<-END
 #{config[:seed_model]}.seed(#{seed_by.collect{|s| ":#{s}"}.join(',')}) { |s|
-#{hash.collect{|k,v| "  s.#{k} = '#{v.to_s.gsub("'", "\'")}'\n"}.join}}
+#{hash.collect{|k,v| "  s.#{k} = \"#{escape_value(v)}\"\n"}.join}}
         END
         )
         super(hash)

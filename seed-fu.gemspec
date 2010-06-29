@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
      "spec/schema.rb",
      "spec/seed_fu_spec.rb",
      "spec/spec_helper.rb",
+     "spec/writer/abstract_spec.rb",
      "tasks/seed_fu_tasks.rake"
   ]
   s.homepage = %q{http://github.com/mblegih/seed-fu}
@@ -39,7 +40,8 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/schema.rb",
      "spec/seed_fu_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/writer/abstract_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
