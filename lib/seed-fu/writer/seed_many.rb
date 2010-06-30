@@ -21,7 +21,7 @@ module SeedFu
       def add_seed(hash)
         seed_handle.syswrite( (<<-END
 #{',' unless self.number_of_seeds == 0 or chunk_this_seed?}
-  { #{hash.collect{|k,v| ":#{k} => \"#{escape_value(v)}\""}.join(', ')} }
+  { #{hash.collect{|k,v| ":#{k} => %Q{#{v}}"}.join(', ')} }
         END
         ).chomp )
         super(hash)

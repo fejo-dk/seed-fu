@@ -33,10 +33,6 @@ module SeedFu
         END
       end
       
-      def escape_value(value)
-        value.to_s.gsub("\"", '\"')
-      end
-
       def add_seed(hash)
         $stdout.puts "Added #{hash.inspect}" unless config[:quiet]
         self.number_of_seeds += 1
