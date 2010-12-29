@@ -46,46 +46,38 @@ namespace :db do
       pretty_name = file.sub("#{RAILS_ROOT}/", "")
       puts "\n== Seed from #{pretty_name} " + ("=" * (60 - (17 + File.split(file).last.length)))
 
-      old_level = ActiveRecord::Base.logger.level
-      begin
-        ActiveRecord::Base.logger.level = 7
-
-        ActiveRecord::Base.transaction do
-          if pretty_name[-3..pretty_name.length] == '.gz'
-            # If the file is gzip, read it and use eval
-            #
-            Zlib::GzipReader.open(file) do |gz|
-              chunked_ruby = ''
-              gz.each_line do |line|
-                if line == "# BREAK EVAL\n"
-                  eval(chunked_ruby)
-                  chunked_ruby = ''
-                else
-                  chunked_ruby << line
-                end
+      ActiveRecord::Base.transaction do
+        if pretty_name[-3..pretty_name.length] == '.gz'
+          # If the file is gzip, read it and use eval
+          #
+          Zlib::GzipReader.open(file) do |gz|
+            chunked_ruby = ''
+            gz.each_line do |line|
+              if line == "# BREAK EVAL\n"
+                eval(chunked_ruby)
+                chunked_ruby = ''
+              else
+                chunked_ruby << line
               end
-              eval(chunked_ruby) unless chunked_ruby == ''
             end
-          else
-            # Just load regular .rb files
-            #
-            File.open(file) do |file|
-              chunked_ruby = ''
-              file.each_line do |line|
-                if line == "# BREAK EVAL\n"
-                  eval(chunked_ruby)
-                  chunked_ruby = ''
-                else
-                  chunked_ruby << line
-                end
+            eval(chunked_ruby) unless chunked_ruby == ''
+          end
+        else
+          # Just load regular .rb files
+          #
+          File.open(file) do |file|
+            chunked_ruby = ''
+            file.each_line do |line|
+              if line == "# BREAK EVAL\n"
+                eval(chunked_ruby)
+                chunked_ruby = ''
+              else
+                chunked_ruby << line
               end
-              eval(chunked_ruby) unless chunked_ruby == ''
             end
+            eval(chunked_ruby) unless chunked_ruby == ''
           end
         end
-
-      ensure
-        ActiveRecord::Base.logger.level = old_level
       end
     end
   end
