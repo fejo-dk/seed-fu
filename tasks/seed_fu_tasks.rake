@@ -27,14 +27,19 @@ namespace :db do
       rake db:seed FIXTURE_PATH=features/fixtures 
   EOS
   task task_name => :environment do
-    fixture_path = ENV["FIXTURE_PATH"] ? ENV["FIXTURE_PATH"] : "db/fixtures"
+    fixture_paths = ENV["FIXTURE_PATH"] ? ENV["FIXTURE_PATH"].split(',') : ["db/fixtures"]
 
-    seed_files = (
-      ( Dir[File.join(RAILS_ROOT, fixture_path, '*.rb')] +
-        Dir[File.join(RAILS_ROOT, fixture_path, '*.rb.gz')] ).sort +
-      ( Dir[File.join(RAILS_ROOT, fixture_path, RAILS_ENV, '*.rb')] +
-        Dir[File.join(RAILS_ROOT, fixture_path, RAILS_ENV, '*.rb.gz')] ).sort
-    ).uniq
+    seed_files = []
+
+    fixture_paths.each do |fixture_path|
+      seed_files << 
+        ( Dir[File.join(RAILS_ROOT, fixture_path, '*.rb')] +
+          Dir[File.join(RAILS_ROOT, fixture_path, '*.rb.gz')] ).sort +
+        ( Dir[File.join(RAILS_ROOT, fixture_path, RAILS_ENV, '*.rb')] +
+          Dir[File.join(RAILS_ROOT, fixture_path, RAILS_ENV, '*.rb.gz')] ).sort
+    end
+
+    seed_files = seed_files.flatten.uniq
     
     if ENV["SEED"]
       filter = ENV["SEED"].gsub(/,/, "|")
