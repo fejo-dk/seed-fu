@@ -47,6 +47,8 @@ namespace :db do
       puts "\n == Filtering seed files against regexp: #{filter}"
     end
 
+    seed_files.sort!{|a,b| File.basename(a) <=> File.basename(b) }
+
     seed_files.each do |file|
       pretty_name = file.sub("#{RAILS_ROOT}/", "")
       puts "\n== Seed from #{pretty_name} " + ("=" * (60 - (17 + File.split(file).last.length)))
